@@ -1,15 +1,10 @@
 import { Router } from 'express';
 
-import { ClubController } from './controllers/club';
-import { ClubUseCases } from './use-cases/clubs';
-import { PrismaRepository } from './repositories/prisma';
-import { prisma } from './lib/prisma';
-
-const prismaRepository = new PrismaRepository(prisma);
-const clubUseCases = new ClubUseCases(prismaRepository);
-const clubController = new ClubController(clubUseCases);
+import { makeClubController } from './factories/club-controller';
 
 export const routes = Router();
+
+const clubController = makeClubController();
 
 routes.get('/', (req, res) => res.status(200).json({ message: 'Hello world!' }));
 
